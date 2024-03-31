@@ -61,17 +61,19 @@ def list_tasks(show_all=None):
         tasks = {}
     if len(tasks) == 0:
         print('No tasks have been started, run \'track start <task_name>\' to get started')
-    else:
-        print('Task Name -- Time Spent (min)')
+        return -1
+    display = [['Task Name', 'Time Spent']]
+    max_len = len(display[0][0])  # track max col width needed to make table look pretty
     for name in tasks:
-        if show_all:
+        if show_all or tasks[name]['time_intervals'][-1]['end'] is None:
             duration = tasks[name]['duration']
-            minutes_spent = round(duration / 60)
-            print(f'{name} -- {minutes_spent}')
-        elif tasks[name]['time_intervals'][-1]['end'] is None:
-            duration = tasks[name]['duration']
-            minutes_spent = round(duration / 60)
-            print(f'{name} -- {minutes_spent}')
+            minutes_spent = str(round(duration / 60))
+            display.append([name, minutes_spent])
+            max_len = max(max_len, len(name), len(minutes_spent))
+    spacer = ' ' * max_len
+    for items in display:
+        # todo: pretty print a table
+        print(items)
 
 
 if __name__ == '__main__':
