@@ -2,6 +2,7 @@ import sys
 import json
 import time
 import os
+from tabulate import tabulate
 
 
 def _write_data(data):
@@ -62,18 +63,16 @@ def list_tasks(show_all=None):
     if len(tasks) == 0:
         print('No tasks have been started, run \'track start <task_name>\' to get started')
         return -1
-    display = [['Task Name', 'Time Spent']]
-    max_len = len(display[0][0])  # track max col width needed to make table look pretty
+    display_data, max_len = [], 0
     for name in tasks:
         if show_all or tasks[name]['time_intervals'][-1]['end'] is None:
             duration = tasks[name]['duration']
             minutes_spent = str(round(duration / 60))
-            display.append([name, minutes_spent])
+            if duration == 0:
+                minutes_spent = 'In progress'  # todo: calculate total time spent on task so far
+            display_data.append([name, minutes_spent])
             max_len = max(max_len, len(name), len(minutes_spent))
-    spacer = ' ' * max_len
-    for items in display:
-        # todo: pretty print a table
-        print(items)
+    print(tabulate(display_data, headers=['Task Name', 'Time Spent (min)']))
 
 
 if __name__ == '__main__':
