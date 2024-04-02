@@ -1,20 +1,23 @@
+#!/usr/bin/env python3
 import sys
 import json
 import time
 import os
 from tabulate import tabulate
 
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_FILE = CURRENT_DIR + '/tasks.json'
 
 def _write_data(data):
-    with open('tasks.json', 'w') as f:
+    with open(DATA_FILE, 'w') as f:
         json.dump(data, f)
 
 
 def start_task(task_name):
-    if not os.path.exists('tasks.json'):
-        with open('tasks.json', 'w') as f:
+    if not os.path.exists(DATA_FILE):
+        with open(DATA_FILE, 'w') as f:
             json.dump({}, f)
-    with open('tasks.json', 'r') as f:
+    with open(DATA_FILE, 'r') as f:
         tasks = json.load(f)
     if task_name not in tasks:
         tasks[task_name] = {
@@ -36,7 +39,7 @@ def start_task(task_name):
 
 
 def stop_task(task_name):
-    with open('tasks.json', 'r') as f:
+    with open(DATA_FILE, 'r') as f:
         tasks = json.load(f)
     if task_name not in tasks:
         print(f'Task {task_name} could not be found in the current task list, try \'track ls\' to see active tasks.')
@@ -51,12 +54,13 @@ def stop_task(task_name):
     _write_data(tasks)
 
     minutes_spent = task['duration'] / 60
-    print(f'Task {task_name} successfully stopped. Session time: {minutes_spent} minutes.  \nTo see total time spent on tasks, view the report with \'track report\'')
+    print(f'Task {task_name} successfully stopped. Session time: {minutes_spent} minutes.')
+    print('To view time spent on tasks, use \'track ls -a\'')
 
 
 def list_tasks(show_all=None):
     try:
-        with open('tasks.json', 'r') as f:
+        with open(DATA_FILE, 'r') as f:
             tasks = json.load(f)
     except:
         tasks = {}
@@ -76,7 +80,6 @@ def list_tasks(show_all=None):
 
 
 if __name__ == '__main__':
-    print(f'args = {sys.argv}')
     if sys.argv[1] == 'start':
         if len(sys.argv) == 3 and isinstance(sys.argv[1], str):
             start_task(sys.argv[2])
