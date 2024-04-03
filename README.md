@@ -1,5 +1,5 @@
 # Task Track
 
-A dead-simple task tracker designed to help you manage your tasks efficiently
+A dead-simple command line tool designed to help you track your time
 
 *User guide is in progress*
