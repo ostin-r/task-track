@@ -6,7 +6,7 @@ import os
 from tabulate import tabulate
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_FILE = CURRENT_DIR + '/tasks.json'
+DATA_FILE = CURRENT_DIR + '/tasks_14kl31i.json'
 
 def _write_data(data):
     with open(DATA_FILE, 'w') as f:
