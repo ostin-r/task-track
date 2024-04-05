@@ -6,6 +6,6 @@ A dead-simple command line tool designed to help you track your time
 
 Feature todo:
 - Add autocomplete to task names
-- Make 'ls' primary command for listing all instead of 'ls -a', make listing in progress the optional with 'ls -c' (current)
+- Standardize file path for tasks.json - os.path.expanduser may work
 
 
