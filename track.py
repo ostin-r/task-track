@@ -47,10 +47,7 @@ def stop_task(task_name):
     task = tasks[task_name]
     last_interval = task['time_intervals'][-1]
     last_interval['end'] = time.time()
-    duration = 0
-    for interval in task['time_intervals']:
-        duration += interval['end'] - interval['start']
-    task['duration'] = duration
+    task['duration'] += last_interval['end'] - last_interval['start']
     _write_data(tasks)
 
     minutes_spent = task['duration'] / 60
@@ -69,13 +66,12 @@ def list_tasks(show_all=None):
         return -1
     display_data, max_len = [], 0
     for name in tasks:
-        if show_all or tasks[name]['time_intervals'][-1]['end'] is None:
-            duration = tasks[name]['duration']
-            minutes_spent = str(round(duration / 60))
-            if duration == 0:
-                minutes_spent = 'In progress'  # todo: calculate total time spent on task so far
-            display_data.append([name, minutes_spent])
-            max_len = max(max_len, len(name), len(minutes_spent))
+        duration = tasks[name]['duration']
+        minutes_spent = str(round(duration / 60))
+        if duration == 0:
+            minutes_spent = 'In progress'  # todo: calculate total time spent on task so far
+        display_data.append([name, minutes_spent])
+        max_len = max(max_len, len(name), len(minutes_spent))
     print(tabulate(display_data, headers=['Task Name', 'Time Spent (min)']))
 
 
@@ -93,10 +89,8 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'ls':
         if len(sys.argv) == 2:
             list_tasks()
-        elif len(sys.argv) == 3:
-            list_tasks(sys.argv[2])
         else:
-            print('Incorrect usage of \'ls\' command.  Use \'track ls\' or \'track ls -a\'')
+            print('Incorrect usage of \'ls\' command.  Use \'track ls\'')
     else:
         print('unkown arguments given')
 
