@@ -90,5 +90,5 @@ if __name__ == '__main__':
     elif args.l:
         list_tasks()
     else:
-        print('failed')
+        print('argument not supported: try \'track -h\' or \'track --help\' for usage')
 
