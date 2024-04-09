@@ -3,7 +3,9 @@ import sys
 import json
 import time
 import os
+import argparse
 from tabulate import tabulate
+
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_FILE = CURRENT_DIR + '/tasks_14kl31i.json'
@@ -76,21 +78,17 @@ def list_tasks(show_all=None):
 
 
 if __name__ == '__main__':
-    if sys.argv[1] == 'start':
-        if len(sys.argv) == 3 and isinstance(sys.argv[1], str):
-            start_task(sys.argv[2])
-        else:
-            print('Incorrect usage of \'start\' command. Try \'task start <unique_task_name>\'')
-    elif sys.argv[1] == 'stop':
-        if len(sys.argv) == 3 and isinstance(sys.argv[1], str):
-            stop_task(sys.argv[2])
-        else:
-            print('Incorrect usage of \'stop\' command. Try \'task stop <unique_task_name>\'')
-    elif sys.argv[1] == 'ls':
-        if len(sys.argv) == 2:
-            list_tasks()
-        else:
-            print('Incorrect usage of \'ls\' command.  Use \'track ls\'')
+    parser = argparse.ArgumentParser(description='A dead simple time tracker')
+    parser.add_argument('-s', help='start tracking a task: track -s <task_name>')
+    parser.add_argument('-x', help='stop tracking a task: track -x <task_name>')
+    parser.add_argument('-l', action='store_true', help='list all tasks: track -l')
+    args = parser.parse_args()
+    if args.s:
+        start_task(args.s)
+    elif args.x:
+        stop_task(args.x)
+    elif args.l:
+        list_tasks()
     else:
-        print('unkown arguments given')
+        print('failed')
 
