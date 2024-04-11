@@ -6,6 +6,5 @@ A dead-simple command line tool designed to help you track your time
 
 Feature todo:
 - Add autocomplete to task names
-- Add man page
 - Register on python package index
 

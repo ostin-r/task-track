@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-import sys
 import json
 import time
 import os
 import argparse
-import argcomplete
 from tabulate import tabulate
 
 
@@ -83,7 +81,6 @@ if __name__ == '__main__':
     parser.add_argument('-s', help='start tracking a task: track -s <task_name>')
     parser.add_argument('-x', help='stop tracking a task: track -x <task_name>')
     parser.add_argument('-l', action='store_true', help='list all tasks: track -l')
-    argcomplete.autocomplete(parser)
     args = parser.parse_args()
     if args.s:
         start_task(args.s)
