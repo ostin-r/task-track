@@ -3,7 +3,7 @@ import json
 import time
 import os
 import argparse
-from tabulate import tabulate
+# from tabulate import tabulate
 
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -73,7 +73,8 @@ def list_tasks():
             minutes_spent = 'In progress'  # todo: calculate total time spent on task so far
         display_data.append([name, minutes_spent])
         max_len = max(max_len, len(name), len(minutes_spent))
-    print(tabulate(display_data, headers=['Task Name', 'Time Spent (min)']))
+    # print(tabulate(display_data, headers=['Task Name', 'Time Spent (min)']))
+    print(display_data)
 
 
 if __name__ == '__main__':

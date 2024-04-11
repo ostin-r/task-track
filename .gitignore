@@ -1,5 +1,2 @@
-tasks.json
-bin/
-lib/
-pyvenv.cfg
+tasks*.json
 
