@@ -4,6 +4,7 @@ import json
 import time
 import os
 import argparse
+import argcomplete
 from tabulate import tabulate
 
 
@@ -30,7 +31,7 @@ def start_task(task_name):
     else:
         task = tasks[task_name]
         if task['time_intervals'][-1]['end'] is None:
-            print(f'Task {task_name} has already been started.  Run \'track stop <task_name>\' to complete the task first.')
+            print(f'Task {task_name} has already been started.  Run \'track -x <task_name>\' to finish the current session.')
             return -1
         task['time_intervals'].append({
             'start': time.time(),
@@ -44,7 +45,7 @@ def stop_task(task_name):
     with open(DATA_FILE, 'r') as f:
         tasks = json.load(f)
     if task_name not in tasks:
-        print(f'Task {task_name} could not be found in the current task list, try \'track ls\' to see active tasks.')
+        print(f'Task {task_name} could not be found in the current task list, try \'track -l\' to view the task list.')
         return -1
     task = tasks[task_name]
     last_interval = task['time_intervals'][-1]
@@ -54,17 +55,17 @@ def stop_task(task_name):
 
     minutes_spent = task['duration'] / 60
     print(f'Task {task_name} successfully stopped. Session time: {minutes_spent} minutes.')
-    print('To view time spent on tasks, use \'track ls -a\'')
+    print('To view time spent on tasks, use \'track -l\'')
 
 
-def list_tasks(show_all=None):
+def list_tasks():
     try:
         with open(DATA_FILE, 'r') as f:
             tasks = json.load(f)
     except:
         tasks = {}
     if len(tasks) == 0:
-        print('No tasks have been started, run \'track start <task_name>\' to get started')
+        print('No tasks have been started, run \'track -s <task_name>\' to get started')
         return -1
     display_data, max_len = [], 0
     for name in tasks:
@@ -82,6 +83,7 @@ if __name__ == '__main__':
     parser.add_argument('-s', help='start tracking a task: track -s <task_name>')
     parser.add_argument('-x', help='stop tracking a task: track -x <task_name>')
     parser.add_argument('-l', action='store_true', help='list all tasks: track -l')
+    argcomplete.autocomplete(parser)
     args = parser.parse_args()
     if args.s:
         start_task(args.s)
