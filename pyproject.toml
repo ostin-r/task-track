@@ -2,13 +2,20 @@
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build.targets.sdist]
+ignore-vcs = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/task_track"]
+
 [project]
-name = "task-track"
+name="task-track"
+# caution: hatchling turns hyphens into underscores when looking for directories
 version = "0.0.1"
 authors = [
   { name="Austin Richards", email="austinjrichards@outlook.com" },
 ]
-description = "A dead simple cli task time tracker"
+description = "A dead simple cli time tracker"
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
