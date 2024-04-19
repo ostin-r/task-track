@@ -9,13 +9,14 @@ ignore-vcs = true
 packages = ["src/task_track"]
 
 [project]
-name="task-track"
 # caution: hatchling turns hyphens into underscores when looking for directories
-version = "0.0.1"
+name="task-track"
+version = "0.0.9"
 authors = [
   { name="Austin Richards", email="austinjrichards@outlook.com" },
 ]
 description = "A dead simple cli time tracker"
+dependencies = ["tabulate"]
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
@@ -23,6 +24,9 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+
+[project.scripts]
+track = "task_track.track:track_main"
 
 [project.urls]
 Homepage = "https://github.com/ostin-r/task-track"

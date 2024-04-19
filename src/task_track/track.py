@@ -3,7 +3,7 @@ import json
 import time
 import os
 import argparse
-# from tabulate import tabulate
+from tabulate import tabulate
 
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -73,11 +73,10 @@ def list_tasks():
             minutes_spent = 'In progress'  # todo: calculate total time spent on task so far
         display_data.append([name, minutes_spent])
         max_len = max(max_len, len(name), len(minutes_spent))
-    # print(tabulate(display_data, headers=['Task Name', 'Time Spent (min)']))
-    print(display_data)
+    print(tabulate(display_data, headers=['Task Name', 'Time Spent (min)']))
 
 
-if __name__ == '__main__':
+def track_main():
     parser = argparse.ArgumentParser(description='A dead simple time tracker')
     parser.add_argument('-s', help='start tracking a task: track -s <task_name>')
     parser.add_argument('-x', help='stop tracking a task: track -x <task_name>')
@@ -91,4 +90,7 @@ if __name__ == '__main__':
         list_tasks()
     else:
         print('argument not supported: try \'track -h\' or \'track --help\' for usage')
+
+if __name__ == '__main__':
+    track_main()
 
