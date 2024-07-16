@@ -11,7 +11,7 @@ packages = ["src/task_track"]
 [project]
 # caution: hatchling turns hyphens into underscores when looking for directories
 name="task-track"
-version = "0.0.9"
+version = "0.0.10"
 authors = [
   { name="Austin Richards", email="austinjrichards@outlook.com" },
 ]
