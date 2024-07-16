@@ -47,6 +47,9 @@ def stop_task(task_name):
         return -1
     task = tasks[task_name]
     last_interval = task['time_intervals'][-1]
+    if last_interval['end'] is not None:
+        print(f'Task {task_name} has not been started yet, use \'track -s {task_name}\' to start tracking')
+        return -1
     last_interval['end'] = time.time()
     task['duration'] += last_interval['end'] - last_interval['start']
     _write_data(tasks)
